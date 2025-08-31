@@ -12,13 +12,17 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
 
         if (emailType == "VERIFY") {
             await userModel.findOneAndUpdate(userId, {
-                verifyToken: hashedValue,
-                verifyTokenExpiry: Date.now() + 3600000
+                $set: {
+                    verifyToken: hashedValue,
+                    verifyTokenExpiry: Date.now() + 3600000
+                }
             })
         } else if (emailType == "RESET") {
             await userModel.findOneAndUpdate(userId, {
-                forgotPasswordToken: hashedValue,
-                forgotPasswordTokenExpiry: Date.now() + 3600000
+                $set: {
+                    forgotPasswordToken: hashedValue,
+                    forgotPasswordTokenExpiry: Date.now() + 3600000
+                }
             })
         }
 
